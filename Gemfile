@@ -38,6 +38,12 @@ gem 'spring',        group: :development
 #Api gems
 gem 'active_model_serializers'
 
+group :test do
+	gem "rspec-rails", "~> 2.14"
+	gem "factory_girl_rails"
+	gem "ffaker"
+end
+
 # bundle exec rake doc:rails generates the API under doc/api.
 group :doc do
 	gem 'sdoc', require: false
