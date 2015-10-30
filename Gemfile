@@ -40,6 +40,8 @@ gem 'pry-rails', :group => :development
 #Api gems
 gem 'active_model_serializers'
 
+gem 'rack-cors', :require => 'rack/cors'
+
 group :test do
 	gem "rspec-rails", "~> 2.14"
 	gem "factory_girl_rails"
