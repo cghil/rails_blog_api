@@ -19,7 +19,9 @@ module MarketPlaceApi
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-
+    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
+    
     config.generators do |g|
       g.test_framework :rspec, fixture: true
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
@@ -30,8 +32,16 @@ module MarketPlaceApi
       g.helper = false
     end
 
-    config.autoload_paths += %W(\#{config.root}/lib)
-    config.autoload_paths += %W(\#{config.root}/controllers/concerns)
+    config.middleware.insert_before 0, "Rack::Cors" do
+      allow do
+        origins '*'
+        resource '*', 
+          :headers => :any,
+          :methods => [:get, :post, :delete, :put, :patch, :options, :head],
+          :max_age => 0
+      end
+    end
+
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
