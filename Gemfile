@@ -42,6 +42,8 @@ gem 'active_model_serializers'
 
 gem 'rack-cors', :require => 'rack/cors'
 
+gem 'gravtastic'
+
 group :test do
 	gem "rspec-rails", "~> 2.14"
 	gem "factory_girl_rails"

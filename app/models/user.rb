@@ -6,8 +6,11 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-
   validates_confirmation_of :password
+
+  include Gravtastic
+  gravtastic
+
   before_create :generate_authentication_token!
   has_many :questions
   def generate_authentication_token!
