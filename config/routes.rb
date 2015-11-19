@@ -8,6 +8,7 @@ devise_for :users
       # We are going to list our resources here
       resources :users, :only => [:show, :create, :update, :destroy]
       resources :sessions, :only => [:create, :destroy]
+      resources :questions, :only => [:index, :show, :update, :destroy, :create]
     end
   end
 end
