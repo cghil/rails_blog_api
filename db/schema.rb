@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151023223214) do
+ActiveRecord::Schema.define(version: 20151119020014) do
+
+  create_table "articles", force: true do |t|
+    t.string   "title"
+    t.text     "text"
+    t.date     "published"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "articles", ["user_id"], name: "index_articles_on_user_id"
+
+  create_table "questions", force: true do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "questions", ["user_id"], name: "index_questions_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -27,6 +48,7 @@ ActiveRecord::Schema.define(version: 20151023223214) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "auth_token",             default: ""
+    t.string   "username"
   end
 
   add_index "users", ["auth_token"], name: "index_users_on_auth_token", unique: true
