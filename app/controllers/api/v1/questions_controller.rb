@@ -1,12 +1,38 @@
 class Api::V1::QuestionsController < ApplicationController
-	before_action :authenticate_with_token!, only: [:update, :destroy, :create]
+	before_action :authenticate_with_token!, only: [ :destroy, :create]
 	respond_to :json
 
 	def index
-
+		questions = Questions.all
+		render json: questions
 	end
 	
 	def show
-
+		question = Question.find(params[:id])
+		comments = question.comments
+		render json: question, comments
 	end
+
+	def create
+		question = Question.new(question_params)
+		if question.save
+			render json: question
+		else
+			render json: {errors: question.errors}, status: 422
+		end
+	end
+
+	def destroy
+		user = User.find_by(auth_token: request.headers['Authorization'])
+		question = Question.find(params[:id])
+		if user.id === question.user_id
+			question.destroy
+		end
+	end
+
+	private
+
+		def question_params
+			params.require(:question).permit(:user_id, :title, :body)
+		end
 end
