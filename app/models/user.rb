@@ -12,7 +12,9 @@ class User < ActiveRecord::Base
   gravtastic
 
   before_create :generate_authentication_token!
-  has_many :questions
+  has_many :questions, dependent: :destroy
+  has_many :comments, through: :questions, dependent: :destroy
+
   def generate_authentication_token!
   	begin
   		self.auth_token = Devise.friendly_token

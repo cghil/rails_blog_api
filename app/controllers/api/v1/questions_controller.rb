@@ -3,14 +3,14 @@ class Api::V1::QuestionsController < ApplicationController
 	respond_to :json
 
 	def index
-		questions = Questions.all
+		questions = Question.all
 		render json: questions
 	end
 	
 	def show
 		question = Question.find(params[:id])
 		comments = question.comments
-		render json: question, comments
+		render json: {question: question, comments: comments}
 	end
 
 	def create
@@ -27,6 +27,8 @@ class Api::V1::QuestionsController < ApplicationController
 		question = Question.find(params[:id])
 		if user.id === question.user_id
 			question.destroy
+		else
+			render json: { errors: "Could NOT delete question... Server Error" }, status: 422
 		end
 	end
 
