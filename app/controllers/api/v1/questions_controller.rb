@@ -1,5 +1,5 @@
 class Api::V1::QuestionsController < ApplicationController
-	before_action :authenticate_with_token!, only: [ :destroy, :create]
+	before_action :authenticate_with_token!, only: [ :destroy, :create, :upvote, :downvote]
 	respond_to :json
 
 	def index
@@ -30,6 +30,17 @@ class Api::V1::QuestionsController < ApplicationController
 		else
 			render json: { errors: "Could NOT delete question... Server Error" }, status: 422
 		end
+	end
+
+	def upvote
+		question = Question.find(params[:id])
+		question.votes +=1
+
+	end
+
+	def downvote
+		question = Question.find(params[:id])
+		question.votes -=1
 	end
 
 	private
