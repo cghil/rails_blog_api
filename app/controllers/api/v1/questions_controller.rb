@@ -15,6 +15,8 @@ class Api::V1::QuestionsController < ApplicationController
 
 	def create
 		question = Question.new(question_params)
+		user = user.find(params[:user_id])
+		question.author = user.username
 		if question.save
 			render json: question
 		else
