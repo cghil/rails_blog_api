@@ -10,6 +10,10 @@ devise_for :users
       
       resources :sessions, :only => [:create, :destroy]
 
+
+      patch '/questions/:id/upvote', to: 'questions#upvote'
+      patch '/questions/:id/downvote', to: 'questions#downvote'
+
       resources :questions, only: [:index, :show, :destroy, :create] do
       	resources :comments, :except => [:update, :destroy, :new, :edit]
       end
