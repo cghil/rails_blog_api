@@ -10,12 +10,17 @@ class Api::V1::QuestionsController < ApplicationController
 	def show
 		question = Question.find(params[:id])
 		comments = question.comments
-		render json: {question: question, comments: comments}
+		user = User.find(question.user_id)
+		email = user.email
+		username = user.username
+		user = {username: username, email: email}
+		render json: {question: question, comments: comments, user: user}
 	end
 
 	def create
 		question = Question.new(question_params)
-		user = user.find(params[:user_id])
+		id = params[:question][:user_id]
+		user = User.find(id)
 		question.author = user.username
 		if question.save
 			render json: question
@@ -37,7 +42,6 @@ class Api::V1::QuestionsController < ApplicationController
 	def upvote
 		question = Question.find(params[:id])
 		question.votes +=1
-
 	end
 
 	def downvote

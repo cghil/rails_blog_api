@@ -10,6 +10,8 @@ class Api::V1::CommentsController < ApplicationController
 
 	def create
 		comment = Comment.new(comment_params)
+		user = User.find(params[:comment][:user_id])
+		comment.author = user.username
 		if comment.save
 			render json: comment
 		else
