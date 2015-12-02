@@ -34,6 +34,7 @@ class Api::V1::QuestionsController < ApplicationController
 		question = Question.find(params[:id])
 		if user.id == question.user_id
 			question.destroy
+			head 204
 		else
 			render json: { errors: "Could NOT delete question... Server Error" }, status: 422
 		end

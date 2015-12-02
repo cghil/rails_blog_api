@@ -26,6 +26,7 @@ class Api::V1::CommentsController < ApplicationController
 		comment = Comment.find(params[:id])
 		if user.id == comment.user_id
 			comment.destroy
+			head 204
 		else
 			render json: {errors: 'Could NOT delete question... Server Error'}, status: 422
 		end
