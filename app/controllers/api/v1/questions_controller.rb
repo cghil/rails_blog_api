@@ -32,7 +32,7 @@ class Api::V1::QuestionsController < ApplicationController
 	def destroy
 		user = User.find_by(auth_token: request.headers['Authorization'])
 		question = Question.find(params[:id])
-		if user.id === question.user_id
+		if user.id == question.user_id
 			question.destroy
 		else
 			render json: { errors: "Could NOT delete question... Server Error" }, status: 422
