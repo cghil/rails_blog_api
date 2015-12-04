@@ -10,10 +10,25 @@ class Api::V1::CommentsController < ApplicationController
 
 	def create
 		comment = Comment.new(comment_params)
+		user = User.find(params[:comment][:user_id])
+		gravatar = user.gravatar_url
+		comment.author = user.username
+		comment.gravatar = gravatar
 		if comment.save
 			render json: comment
 		else
 			render json: {errors: comment.errors}, status: 422
+		end
+	end
+
+	def destroy
+		user = User.find_by(auth_token: request.headers['Authorization'])
+		comment = Comment.find(params[:id])
+		if user.id == comment.user_id
+			comment.destroy
+			head 204
+		else
+			render json: {errors: 'Could NOT delete question... Server Error'}, status: 422
 		end
 	end
 
