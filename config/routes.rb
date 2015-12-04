@@ -14,6 +14,8 @@ devise_for :users
       patch '/questions/:id/upvote', to: 'questions#upvote'
       patch '/questions/:id/downvote', to: 'questions#downvote'
 
+      # patch '/users/:id/add_bio', to: 'users#add_bio'
+
       resources :questions, only: [:index, :show, :destroy, :create] do
       	resources :comments, :except => [:update, :destroy, :new, :edit]
       end
