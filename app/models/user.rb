@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   has_many :questions, dependent: :destroy
   has_many :comments, dependent: :destroy
 
+  has_many :answers, dependent: :destroy
+
   def generate_authentication_token!
   	begin
   		self.auth_token = Devise.friendly_token
