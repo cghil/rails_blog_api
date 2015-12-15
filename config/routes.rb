@@ -18,8 +18,10 @@ devise_for :users
 
       resources :questions, only: [:index, :show, :destroy, :create] do
       	resources :comments, :except => [:update, :destroy, :new, :edit]
+        resources :answers, :except => [:update, :destroy, :new, :edit]
       end
 
+      resources :answers, :only => [:update, :destroy]
       resources :comments, :only => [:update, :destroy]
     end
   end

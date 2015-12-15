@@ -11,7 +11,8 @@ class Api::V1::UsersController < ApplicationController
     bio = user.bio
     comments = user.comments
     questions = user.questions
-  	render json: {user: {email: email, id: id, gravatar: gravatar, username: username, bio: bio}, comments: comments, questions: questions}
+    answers = user.answers
+  	render json: {user: {email: email, id: id, gravatar: gravatar, username: username, bio: bio}, comments: comments, questions: questions, answers: answers}
   end
 
   def create
